@@ -22,11 +22,12 @@ class Words {
 //: ### variables the same type? If not, why?
 
 
-//: [EXPLAIN YOUR ANSWER HERE]
+//: Yes, they are both optionals. The difference between the 2 sets of variables is that the instance variables have the "!", which means the optionals
+//: automatically unwrap (implicitly wrapped optionals), whereas the values passed into **init** must be unwrapped manually by adding the "!" later on.
 
 
 //: ## Q2: Variable Types and Function Types
-    func arePalindromes(_ words: [String]) -> Bool {
+    class func arePalindromes(_ words: [String]) -> Bool {
         let reversedWords = words.map() {String($0.characters.reversed())}
         let numElements = words.count
         
@@ -35,20 +36,21 @@ class Words {
                 return false
             }
         }
+        return true
     }
 //: ### Why does the compiler dislike the **for loop**? Fix it.
 //: ### What else is wrong with this function? You may have to refer to (but **not**
 //: ### change) the code at the very bottom. Debug the function.
 
 
-//: [EXPLAIN YOUR ANSWER HERE]
+//: arePalindromes is initially an instance method not a class/static method, so it must be called through an instance of the Words class, not the class itself. To fix this, we had to add the "class" keyword in front of the method to show it is a class method.
 
 
 //: ## Q3: More Functions and Object Initialization
-    class func isAnagram() -> Bool {
-        var countLetters : [Character : Int] //Line X
-        var lenA = self.wordA.characters.count
-        var lenB = self.wordB.characters.count
+    func isAnagram() -> Bool? {
+        var countLetters : [Character : Int] = [:] //Line X
+        let lenA = self.wordA.characters.count
+        let lenB = self.wordB.characters.count
         
         if lenA != lenB {
             return false
@@ -75,7 +77,7 @@ class Words {
             }
         }
         
-        for (letter, count) in countLetters {
+        for (_,count) in countLetters {
             if count != 0 {
                 return false
             }
@@ -83,16 +85,16 @@ class Words {
         
         return nil
     }
+}
 //: ### What is the problem with declaring **countLetters** as we do in **Line X**,
 //: ### and then using it in **Line Y**? Fix it (by only changing **Line X**).
 //: ### What else is wrong with this function? You may have to refer to (but **not**
 //: ### change) the code at the very bottom. Debug the function.
 
 
-//: [EXPLAIN YOUR ANSWER HERE]
+//: countLetters was declared but not instantiated in line X, and in Line Y we tried to use it but it did not have a value as it was not instantiated. Removed "class" keyword as it is an instance method, not a class/static method. Changed output type to optional (Bool?) since it may return nil. Lastly (but not as important), change "var" to "let" for lenA, lenB as the values of these variables are immutable (did so as per request of Xcode).
     
     
-}
 
 
 //: ## Check Your Answers
